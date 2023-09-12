@@ -3,7 +3,8 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"net/http"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
@@ -26,13 +27,13 @@ func main() {
 	fmt.Println("Connection to database succesful!")
 
 	//create url handlers
-	http.HandleFunc("/api", createUser)
+	// http.HandleFunc("/api", createUser)
 
 	//start http server
-	http.ListenAndServe(":8080", nil)
+	// http.ListenAndServe(":8080", nil)
 
 }
 
-func createUser(w *http.ResponseWriter, r *http.Request) {
-	//
-}
+// func createUser(w *http.ResponseWriter, r *http.Request) {
+// 	//
+// }
