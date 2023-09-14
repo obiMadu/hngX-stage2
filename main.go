@@ -61,7 +61,7 @@ func main() {
 
 	//start http server
 	fmt.Println("*** Server Listening ***")
-	http.ListenAndServe(":8081", route)
+	http.ListenAndServe(":80", route)
 }
 
 func createUser(w http.ResponseWriter, r *http.Request) {
@@ -69,7 +69,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("*** CREATING A USER ***")
 
 	// get and validate values from request
-	slackname := r.FormValue("slackname")
+	slackname := r.FormValue("name")
 	fullname := r.FormValue("fullname")
 	email := r.FormValue("email")
 
@@ -138,7 +138,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Extract the slackname from the path.
 	params := mux.Vars(r)
-	slackname0 := params["slackname"]
+	slackname0 := params["name"]
 	fmt.Println("Route variable: " + slackname0)
 
 	// get and validate values from request
