@@ -54,6 +54,7 @@ func main() {
 
 	//create url handlers
 	route := mux.NewRouter()
+	route.HandleFunc("/api", getAll).Methods("GET")
 	route.HandleFunc("/api", createUser).Methods("POST")
 	route.HandleFunc("/api/{slackname}", readHandler).Methods("GET")
 	route.HandleFunc("/api/{slackname}", updateHandler).Methods("PATCH")
@@ -263,4 +264,29 @@ func deleteHandler(w http.ResponseWriter, r *http.Request) {
 
 func putHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Please use PATCH for updates.")
+}
+
+func getAll(w http.ResponseWriter, r *http.Request) {
+	//running read handler
+	fmt.Println("*** READING ALL USERS ***")
+
+	// run query
+	query := "SELECT `slackname`,`fullname`,`email` FROM `db`.`Users`;"
+	res, err := db.Query(query)
+	if err != nil {
+		w.WriteHeader(206)
+		fmt.Fprintf(w, "No User in Database.")
+		return
+	}
+
+	var user User
+
+	for res.Next() {
+		res.Scan(&user.slackname, &user.fullname, &user.email)
+		fmt.Fprint(w, "slackname: "+string(user.slackname))
+		fmt.Fprint(w, "fullname: "+string(user.fullname))
+		fmt.Fprint(w, "email: "+string(user.email))
+		fmt.Fprint(w, "")
+		fmt.Fprint(w, "")
+	}
 }
