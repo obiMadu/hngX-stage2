@@ -33,7 +33,7 @@ func main() {
 
 		connectionString = username + ":" + password + "@tcp(" + host + ")/" + dbname
 	}
-
+	fmt.Println(connectionString)
 	var err error
 
 	db, err = sql.Open("mysql", connectionString)
