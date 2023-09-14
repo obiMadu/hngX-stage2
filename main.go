@@ -78,7 +78,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	if slackname == "" {
 		w.Header().Set("Content-Type", "text/plain") //set text header
 		w.WriteHeader(206)
-		fmt.Fprintf(w, "Slackname is a required parameter! User not created!!") //return error message
+		fmt.Fprintf(w, "Name is a required parameter! User not created!!") //return error message
 		return
 	}
 
@@ -283,7 +283,7 @@ func getAll(w http.ResponseWriter, r *http.Request) {
 
 	for res.Next() {
 		res.Scan(&user.slackname, &user.fullname, &user.email)
-		fmt.Fprintln(w, "slackname: "+string(user.slackname))
+		fmt.Fprintln(w, "name: "+string(user.slackname))
 		fmt.Fprintln(w, "fullname: "+string(user.fullname))
 		fmt.Fprintln(w, "email: "+string(user.email))
 		fmt.Fprintln(w, "")
