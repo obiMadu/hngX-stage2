@@ -180,4 +180,4 @@ For Guidance creating and setting up the Database for the API, utilize the E-R D
 
 ## 8. Additional Info
 
-- This repository contains a Github Actions workflow that builds my image and uploads it to Azure Container Registry. 
+- This repository contains a Github Actions workflow that builds my image and uploads it to private Azure Container Registry. 
