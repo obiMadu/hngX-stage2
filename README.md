@@ -36,7 +36,7 @@ Current [Active] base URL: `https://hngx2.obimadu.pro/api`
 
 The API supports the following CRUD operations:
 
-- **Create**: `POST /`
+- **Create**: `POST /` or `GET /`
 - **Read**: `GET /{name}`
 - **Update**: `PATCH /{name}`
 - **Delete**: `DELETE /{name}`
@@ -50,6 +50,9 @@ The API supports the following CRUD operations:
     - name (string, required, unique): This is the slackname of the User.
     - fullname (string, optional): Full Name of User.
     - email (string, optional): Email address of User.
+
+  - Create GET Requests take the format:
+    - GET api?name='slackname'&fullname='fullname'&email='email'
 
 - **Get Request** (GET /{name})
   - Body (no-data)
@@ -176,3 +179,10 @@ For Guidance creating and setting up the Database for the API, utilize the E-R D
 [Link to UML Diagram](./UML_diag.png)
 
 ![UML Diagram](./UML_diag.png)
+
+
+## 8. Additional Info
+
+- This repository contains a Github Actions workflow that builds my image and uploads it to Azure Container Registry. 
+
+- User objects can be created via GET requests too. This is just an added perk. 
