@@ -54,7 +54,7 @@ func main() {
 
 	//create url handlers
 	route := mux.NewRouter()
-	route.HandleFunc("/api", createUser)
+	route.HandleFunc("/api", createUser).Methods("POST")
 	route.HandleFunc("/api/{slackname}", readHandler).Methods("GET")
 	route.HandleFunc("/api/{slackname}", updateHandler).Methods("PATCH")
 	route.HandleFunc("/api/{slackname}", putHandler).Methods("PUT")
