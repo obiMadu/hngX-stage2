@@ -56,7 +56,8 @@ func main() {
 	route := mux.NewRouter()
 	route.HandleFunc("/api", createUser)
 	route.HandleFunc("/api/{slackname}", readHandler).Methods("GET")
-	route.HandleFunc("/api/{slackname}", updateHandler).Methods("PUT")
+	route.HandleFunc("/api/{slackname}", updateHandler).Methods("PATCH")
+	route.HandleFunc("/api/{slackname}", putHandler).Methods("PUT")
 	route.HandleFunc("/api/{slackname}", deleteHandler).Methods("DELETE")
 
 	//start http server
@@ -138,7 +139,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Extract the slackname from the path.
 	params := mux.Vars(r)
-	slackname0 := params["name"]
+	slackname0 := params["slackname"]
 	fmt.Println("Route variable: " + slackname0)
 
 	// get and validate values from request
@@ -258,4 +259,8 @@ func deleteHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprintf(w, "User with slackname:"+slackname+" deleted succesfully!")
+}
+
+func putHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Please use PATCH for updates.")
 }
