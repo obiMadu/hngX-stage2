@@ -181,5 +181,3 @@ For Guidance creating and setting up the Database for the API, utilize the E-R D
 ## 8. Additional Info
 
 - This repository contains a Github Actions workflow that builds my image and uploads it to Azure Container Registry. 
-
-- User objects can be created via GET requests too. This is just an added perk. 
