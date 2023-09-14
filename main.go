@@ -283,10 +283,10 @@ func getAll(w http.ResponseWriter, r *http.Request) {
 
 	for res.Next() {
 		res.Scan(&user.slackname, &user.fullname, &user.email)
-		fmt.Fprint(w, "slackname: "+string(user.slackname))
-		fmt.Fprint(w, "fullname: "+string(user.fullname))
-		fmt.Fprint(w, "email: "+string(user.email))
-		fmt.Fprint(w, "")
-		fmt.Fprint(w, "")
+		fmt.Fprintln(w, "slackname: "+string(user.slackname))
+		fmt.Fprintln(w, "fullname: "+string(user.fullname))
+		fmt.Fprintln(w, "email: "+string(user.email))
+		fmt.Fprintln(w, "")
+		fmt.Fprintln(w, "")
 	}
 }
