@@ -142,7 +142,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Route variable: " + slackname0)
 
 	// get and validate values from request
-	slackname := r.FormValue("slackname")
+	slackname := r.FormValue("name")
 	fullname := r.FormValue("fullname")
 	email := r.FormValue("email")
 
