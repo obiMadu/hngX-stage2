@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
@@ -22,7 +23,16 @@ func main() {
 	//main func
 	//connect to sql database
 	//define db conn string
-	connectionString := "root:Gram2580.@tcp(127.0.0.1:3306)/db"
+	//connectionString := "username:password@tcp(ip:port)/db"
+	connectionString := os.Getenv("CONN_STRING")
+	if connectionString == "" {
+		host := os.Getenv("MYSQL_HOST")
+		username := os.Getenv("MYSQL_USERNAME")
+		password := os.Getenv("MYSQL_PASSWORD")
+		dbname := os.Getenv("MYSQL_DBNAME")
+
+		connectionString = username + ":" + password + "@tcp(" + host + ")/" + dbname
+	}
 
 	var err error
 
