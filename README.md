@@ -50,10 +50,7 @@ The API supports the following CRUD operations:
     - name (string, required, unique): This is the slackname of the User.
     - fullname (string, optional): Full Name of User.
     - email (string, optional): Email address of User.
-
-  - Create GET Requests take the format:
-    - GET api?name='slackname'&fullname='fullname'&email='email'
-
+      
 - **Get Request** (GET /{name})
   - Body (no-data)
 
