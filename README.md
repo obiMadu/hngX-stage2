@@ -36,7 +36,7 @@ Current [Active] base URL: `https://hngx2.obimadu.pro/api`
 
 The API supports the following CRUD operations:
 
-- **Create**: `POST /` or `GET /`
+- **Create**: `POST /`
 - **Read**: `GET /{name}`
 - **Update**: `PATCH /{name}`
 - **Delete**: `DELETE /{name}`
