@@ -30,7 +30,7 @@ The API can be accessed via HTTP requests. It exposes endpoints for various CRUD
 
 Sample API base URL: `http://example.com/api`
 
-Current [Active] base URL: `https://hnx2.obimadu.pro/api`
+Current [Active] base URL: `https://hngx2.obimadu.pro/api`
 
 ### 2.2 Supported CRUD Operations
 
