@@ -1,4 +1,4 @@
-# API Documentation
+# REST API Documentation
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@
 
 ## 1. Introduction
 
-This document provides documentation for my HNGx Person Go API project. The API serves as a CRUD (Create, Read, Update, Delete) interface for interacting with a Person Object in a MySQL database. This API is written in Go.
+This document provides documentation for my HNGx Person Go REST API project. The API serves as a CRUD (Create, Read, Update, Delete) interface for interacting with a Person Object in a MySQL database. This API is written in Go.
 
 ## 2. API Usage
 
@@ -37,7 +37,7 @@ Current [Active] base URL: `https://hngx2.obimadu.pro/api`
 The API supports the following CRUD operations:
 
 - **Create**: `POST /`
-- **Read**: `GET /{name}`
+- **Read**: `GET /` & `GET /{name}`
 - **Update**: `PATCH /{name}`
 - **Delete**: `DELETE /{name}`
 
@@ -46,17 +46,17 @@ The API supports the following CRUD operations:
 ### 3.1 Request Formats
 
 - **Create Request** (POST /)
-  - Body (form-data):
-    - name (string, required, unique): This is the slackname of the User.
+  - Body (Json):
+    - name (string, required, **must-be-unique**): This is the slackname of the User.
     - fullname (string, optional): Full Name of User.
     - email (string, optional): Email address of User.
       
-- **Get Request** (GET /{name})
+- **Get Request** (GET / & GET /{name})
   - Body (no-data)
 
 - **Update Request** (PATCH /{name})
-  - Body (form-data):
-    - name (string, required, unique): This is the slackname of the User.
+  - Body (Json):
+    - name (string, required, **must-be-unique**): This is the slackname of the User.
     - fullname (string, optional): Full Name of User.
     - email (string, optional): Email address of User.
 
@@ -67,7 +67,6 @@ The API supports the following CRUD operations:
 
 - **Successful Response** (Status Code: 200 OK)
   - Body (Text):
-    - id (int): User ID.
     - slackname (string): Slackname of User.
     - fullname (string): Full Name of user.
     - email (string): Email of user.
@@ -87,42 +86,62 @@ Here are some sample API calls:
   - Request:
     ```http
     POST https://hngx2.obimadu.pro/api
-    Content-Type: multitype/form-data
+    Content-Type: application/json
 
-      name: obimadu
-      fullname: Obi Madu
-      email: mail@obimadu.pro
+      {"name": "obininja",
+      "fullname": "Obi Ninja",
+      "email": "obininja@email.com"}
     ```
-  - Response (Status Code: 200 OK):
+  - Response (Text) (Status Code: 200 OK):
     ```text
-    User with slackname:obimadu created succesfully!
+    User with name:obininja created succesfully!
     ```
 
 - **Read Resource**
   - Request:
     ```http
-    GET https://hngx2.obimadu.pro/api/obimadu
+    GET https://hngx2.obimadu.pro/api
     ```
-  - Response (Status Code: 200 OK):
-    ```text
-      slackname: obimadu
-      fullname: Obi Madu
-      email: mail@obimadu.pro
+    Response (Json) (Status Code: 200 OK):
+    ```json
+      [{
+        "name": "obimadu1",
+        "fullname": "Obi Madu One",
+        "email": "obimadu1@mail.com"
+        }, {
+            "name": "obimadu2",
+            "fullname": "Obi Madu Two",
+            "email": "obimadu2@mail.com"
+          }]
+    ```
+  - Request:  
+    ```http
+    GET https://hngx2.obimadu.pro/api/obininja
+    ```
+    Response (Json) (Status Code: 200 OK):
+    ```json
+      {
+      "name": "obininja",
+      "fullname": "Obi Ninja",
+      "email": "obininja@email.com"
+      }
     ```
 
 - **Update Resource**
   - Request:
     ```http
-    PATCH https://hngx2.obimadu.pro/api/obimadu
-    Content-Type: multitype/form-data
+    PATCH https://hngx2.obimadu.pro/api/ninja
+    Content-Type: aplication/json
 
-      name: obimaduNew
-      fullname: Obi Madu New
-      email: mail@obimadu.pro
+      {
+        "name": "obimadu",
+        "fullname": "Obi Ninja",
+        "email": "obininja@email.com"
+      }
     ```
   - Response (Status Code: 200 OK):
     ```text
-    User with slackname:obimadu Updated to obimaduNew succesfully!
+    User with name:obininja Updated to obimadu succesfully!
     ```
 
 - **Delete Resource**
@@ -132,7 +151,7 @@ Here are some sample API calls:
     ```
   - Response (Status Code: 200 OK)
     ```text
-    User with slackname:obimaduNew deleted succesfully!
+    User with name:obimadu deleted succesfully!
     ```
 
 ## 5. Setting Up and Running the API in a Container
@@ -179,4 +198,4 @@ For Guidance creating and setting up the Database for the API, utilize the E-R D
 
 ## 8. Additional Info
 
-- This repository contains a Github Actions workflow that builds my image and uploads it to private Azure Container Registry. 
+- This repository contains a Github Actions workflow that builds my image and uploads it to a private Azure Container Registry. 
