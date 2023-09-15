@@ -15,9 +15,9 @@ import (
 var db *sql.DB
 
 type User struct {
-	name     string
-	fullname string
-	email    string
+	name     string `json:"name"`
+	fullname string `json:"fullname"`
+	email    string `json:"email"`
 }
 
 func main() {
@@ -123,7 +123,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, "User with slackname:"+slackname+" created succesfully!")
+	fmt.Fprintf(w, "User with name:"+slackname+" created succesfully!")
 }
 
 func readHandler(w http.ResponseWriter, r *http.Request) {
@@ -242,7 +242,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		defer ins.Close()
-		fmt.Fprintf(w, "User with slackname:"+slackname0+" Updated to "+slackname+" succesfully!")
+		fmt.Fprintf(w, "User with name:"+slackname0+" Updated to "+slackname+" succesfully!")
 
 	}
 }
