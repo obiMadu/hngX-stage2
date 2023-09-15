@@ -15,9 +15,9 @@ import (
 var db *sql.DB
 
 type User struct {
-	name     string `json:"name"`
-	fullname string `json:"fullname"`
-	email    string `json:"email"`
+	Name     string `json:"name"`
+	Fullname string `json:"fullname"`
+	Email    string `json:"email"`
 }
 
 func main() {
@@ -86,9 +86,9 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	slackname := user.name
-	fullname := user.fullname
-	email := user.email
+	slackname := user.Name
+	fullname := user.Fullname
+	email := user.Email
 
 	// get and validate values from request
 	// slackname := r.FormValue("name")
@@ -140,16 +140,16 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 	res := db.QueryRow(query, slackname)
 
 	var user User
-	err := res.Scan(&user.name, &user.fullname, &user.email)
+	err := res.Scan(&user.Name, &user.Fullname, &user.Email)
 	if err != nil {
 		fmt.Println(err.Error())
 		w.Write([]byte("User does not exist"))
 		return
 	}
 
-	fmt.Fprintln(w, "name: "+user.name)
-	fmt.Fprintln(w, "fullname: "+user.fullname)
-	fmt.Fprintln(w, "email: "+user.email)
+	fmt.Fprintln(w, "name: "+user.Name)
+	fmt.Fprintln(w, "fullname: "+user.Fullname)
+	fmt.Fprintln(w, "email: "+user.Email)
 }
 
 func updateHandler(w http.ResponseWriter, r *http.Request) {
@@ -176,9 +176,9 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	slackname := user.name
-	fullname := user.fullname
-	email := user.email
+	slackname := user.Name
+	fullname := user.Fullname
+	email := user.Email
 
 	//check if slackname exists in DB
 	var exists bool
@@ -314,10 +314,10 @@ func getAll(w http.ResponseWriter, r *http.Request) {
 	var user User
 
 	for res.Next() {
-		res.Scan(&user.name, &user.fullname, &user.email)
-		fmt.Fprintln(w, "name: "+string(user.name))
-		fmt.Fprintln(w, "fullname: "+string(user.fullname))
-		fmt.Fprintln(w, "email: "+string(user.email))
+		res.Scan(&user.Name, &user.Fullname, &user.Email)
+		fmt.Fprintln(w, "name: "+string(user.Name))
+		fmt.Fprintln(w, "fullname: "+string(user.Fullname))
+		fmt.Fprintln(w, "email: "+string(user.Email))
 		fmt.Fprintln(w, "")
 		fmt.Fprintln(w, "")
 	}
