@@ -298,7 +298,7 @@ func deleteHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, "User with slackname:"+slackname+" deleted succesfully!")
+	fmt.Fprintf(w, "User with name:"+slackname+" deleted succesfully!")
 }
 
 func putHandler(w http.ResponseWriter, r *http.Request) {
