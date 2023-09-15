@@ -15,9 +15,9 @@ import (
 var db *sql.DB
 
 type User struct {
-	slackname string
-	fullname  string
-	email     string
+	name     string
+	fullname string
+	email    string
 }
 
 func main() {
@@ -86,7 +86,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	slackname := user.slackname
+	slackname := user.name
 	fullname := user.fullname
 	email := user.email
 
@@ -136,18 +136,18 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Route variable: " + slackname)
 
 	// run query
-	query := "SELECT `id`,`slackname`,`fullname`,`email` FROM `db`.`Users` WHERE `slackname` = ?;"
+	query := "SELECT `slackname`,`fullname`,`email` FROM `db`.`Users` WHERE `slackname` = ?;"
 	res := db.QueryRow(query, slackname)
 
 	var user User
-	err := res.Scan(&user.slackname, &user.fullname, &user.email)
+	err := res.Scan(&user.name, &user.fullname, &user.email)
 	if err != nil {
 		fmt.Println(err.Error())
 		w.Write([]byte("User does not exist"))
 		return
 	}
 
-	fmt.Fprintln(w, "name: "+user.slackname)
+	fmt.Fprintln(w, "name: "+user.name)
 	fmt.Fprintln(w, "fullname: "+user.fullname)
 	fmt.Fprintln(w, "email: "+user.email)
 }
@@ -176,7 +176,7 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	slackname := user.slackname
+	slackname := user.name
 	fullname := user.fullname
 	email := user.email
 
@@ -314,8 +314,8 @@ func getAll(w http.ResponseWriter, r *http.Request) {
 	var user User
 
 	for res.Next() {
-		res.Scan(&user.slackname, &user.fullname, &user.email)
-		fmt.Fprintln(w, "name: "+string(user.slackname))
+		res.Scan(&user.name, &user.fullname, &user.email)
+		fmt.Fprintln(w, "name: "+string(user.name))
 		fmt.Fprintln(w, "fullname: "+string(user.fullname))
 		fmt.Fprintln(w, "email: "+string(user.email))
 		fmt.Fprintln(w, "")
