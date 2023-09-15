@@ -147,9 +147,14 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintln(w, "name: "+user.Name)
-	fmt.Fprintln(w, "fullname: "+user.Fullname)
-	fmt.Fprintln(w, "email: "+user.Email)
+	response, err := json.Marshal(user)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	w.Write(response)
 }
 
 func updateHandler(w http.ResponseWriter, r *http.Request) {
@@ -210,8 +215,8 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println("Error running DB update statement", err)
 			w.WriteHeader(206)
-			w.Header().Set("Content-Type", "text/plain") //set text header
-			fmt.Fprintf(w, "Error! Creating update.")    //return error message
+			w.Header().Set("Content-Type", "text/plain")            //set text header
+			fmt.Fprintf(w, "Name has been taken. Try another one.") //return error message
 			return
 		}
 
@@ -315,10 +320,12 @@ func getAll(w http.ResponseWriter, r *http.Request) {
 
 	for res.Next() {
 		res.Scan(&user.Name, &user.Fullname, &user.Email)
-		fmt.Fprintln(w, "name: "+string(user.Name))
-		fmt.Fprintln(w, "fullname: "+string(user.Fullname))
-		fmt.Fprintln(w, "email: "+string(user.Email))
-		fmt.Fprintln(w, "")
-		fmt.Fprintln(w, "")
+		response, err := json.Marshal(user)
+		if err != nil {
+			panic(err.Error())
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(200)
+		w.Write(response)
 	}
 }
