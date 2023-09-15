@@ -2,7 +2,9 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 
@@ -13,7 +15,6 @@ import (
 var db *sql.DB
 
 type User struct {
-	id        string
 	slackname string
 	fullname  string
 	email     string
@@ -70,10 +71,29 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	// indicate /api path is running
 	fmt.Println("*** CREATING A USER ***")
 
+	// Read the JSON data from the request body.
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// Unmarshal the JSON data into a Go object of the User struct type.
+	user := User{}
+	err = json.Unmarshal(body, &user)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	slackname := user.slackname
+	fullname := user.fullname
+	email := user.email
+
 	// get and validate values from request
-	slackname := r.FormValue("name")
-	fullname := r.FormValue("fullname")
-	email := r.FormValue("email")
+	// slackname := r.FormValue("name")
+	// fullname := r.FormValue("fullname")
+	// email := r.FormValue("email")
 
 	if slackname == "" {
 		w.Header().Set("Content-Type", "text/plain") //set text header
@@ -120,7 +140,7 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 	res := db.QueryRow(query, slackname)
 
 	var user User
-	err := res.Scan(&user.id, &user.slackname, &user.fullname, &user.email)
+	err := res.Scan(&user.slackname, &user.fullname, &user.email)
 	if err != nil {
 		fmt.Println(err.Error())
 		w.Write([]byte("User does not exist"))
@@ -133,7 +153,6 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func updateHandler(w http.ResponseWriter, r *http.Request) {
-	//
 	// indicate /api path is running
 	fmt.Println("*** UPDATING A USER ***")
 
@@ -142,20 +161,34 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 	slackname0 := params["slackname"]
 	fmt.Println("Route variable: " + slackname0)
 
-	// get and validate values from request
-	slackname := r.FormValue("name")
-	fullname := r.FormValue("fullname")
-	email := r.FormValue("email")
+	// Read the JSON data from the request body.
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// Unmarshal the JSON data into a Go object of the User struct type.
+	user := User{}
+	err = json.Unmarshal(body, &user)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	slackname := user.slackname
+	fullname := user.fullname
+	email := user.email
 
 	//check if slackname exists in DB
 	var exists bool
-	err := db.QueryRow("SELECT EXISTS (SELECT 1 FROM `db`.`Users` WHERE `slackname` = ?);", slackname0).Scan(&exists)
+	err = db.QueryRow("SELECT EXISTS (SELECT 1 FROM `db`.`Users` WHERE `slackname` = ?);", slackname0).Scan(&exists)
 	if err != nil {
 		fmt.Println("Unable to determine if username exists", err.Error())
 		fmt.Fprintf(w, "Unable to determine if username exists")
 		return
 	}
-	//fmt.Println("exits", exists)
+
 	if exists == false {
 		w.Write([]byte("Username does not exist!"))
 		return
