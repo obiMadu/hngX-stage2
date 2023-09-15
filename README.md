@@ -89,7 +89,7 @@ Here are some sample API calls:
     POST https://hngx2.obimadu.pro/api
     Content-Type: multitype/form-data
 
-      name": obimadu
+      name: obimadu
       fullname: Obi Madu
       email: mail@obimadu.pro
     ```
@@ -105,7 +105,7 @@ Here are some sample API calls:
     ```
   - Response (Status Code: 200 OK):
     ```text
-      slackname: obimadu,
+      slackname: obimadu
       fullname: Obi Madu
       email: mail@obimadu.pro
     ```
