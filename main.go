@@ -205,7 +205,8 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		ins, err := db.Prepare(updateStatement)
 		if err != nil {
 			fmt.Println("Something went wrong preparing the sql statement", err)
-			w.Header().Set("Content-Type", "text/plain")       //set text header
+			w.Header().Set("Content-Type", "text/plain")
+			w.WriteHeader(501)                                 //set text header
 			fmt.Fprintf(w, "Error creating user. Check logs.") //return error message
 			return
 		}
@@ -231,7 +232,8 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			fmt.Println("Something went wrong preparing the sql statement", err)
-			w.Header().Set("Content-Type", "text/plain")       //set text header
+			w.Header().Set("Content-Type", "text/plain") //set text header
+			w.WriteHeader(501)
 			fmt.Fprintf(w, "Error creating user. Check logs.") //return error message
 			return
 		}
@@ -241,8 +243,8 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println("Error running DB update statement", err)
 			w.WriteHeader(501)
-			w.Header().Set("Content-Type", "text/plain") //set text header
-			fmt.Fprintf(w, "Error! updating user.")      //return error message
+			w.Header().Set("Content-Type", "text/plain")            //set text header
+			fmt.Fprintf(w, "Name has been taken. Try another one.") //return error message
 			return
 		}
 
