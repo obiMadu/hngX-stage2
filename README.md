@@ -89,9 +89,9 @@ Here are some sample API calls:
     POST https://hngx2.obimadu.pro/api
     Content-Type: multitype/form-data
 
-      "name": "obimadu"
-      "fullname": "Obi Madu"
-      "email": "mail@obimadu.pro"
+      name": obimadu
+      fullname: Obi Madu
+      email: mail@obimadu.pro
     ```
   - Response (Status Code: 200 OK):
     ```text
@@ -105,10 +105,9 @@ Here are some sample API calls:
     ```
   - Response (Status Code: 200 OK):
     ```text
-      "id": 1,
-      "slackname": "obimadu",
-      "fullname": "Obi Madu"
-      "email": "mail@obimadu.pro"
+      slackname: obimadu,
+      fullname: Obi Madu
+      email: mail@obimadu.pro
     ```
 
 - **Update Resource**
@@ -117,9 +116,9 @@ Here are some sample API calls:
     PATCH https://hngx2.obimadu.pro/api/obimadu
     Content-Type: multitype/form-data
 
-      "name": "obimaduNew"
-      "fullname": "Obi Madu New"
-      "email": "mail@obimadu.pro"
+      name: obimaduNew
+      fullname: Obi Madu New
+      email: mail@obimadu.pro
     ```
   - Response (Status Code: 200 OK):
     ```text
