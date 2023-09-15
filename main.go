@@ -127,8 +127,7 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintln(w, "id: "+user.id)
-	fmt.Fprintln(w, "slackname: "+user.slackname)
+	fmt.Fprintln(w, "name: "+user.slackname)
 	fmt.Fprintln(w, "fullname: "+user.fullname)
 	fmt.Fprintln(w, "email: "+user.email)
 }
