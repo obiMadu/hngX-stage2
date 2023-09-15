@@ -42,7 +42,7 @@ func main() {
 		fmt.Println("Error validating sql.Open arguments")
 		panic(err.Error())
 	}
-	defer db.Close() //close connection. Best practice?
+	defer db.Close()
 
 	//verify connection to database
 	err = db.Ping()
@@ -316,16 +316,20 @@ func getAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var user User
-
+	//create json array of Users
+	var users []User
 	for res.Next() {
-		res.Scan(&user.Name, &user.Fullname, &user.Email)
-		response, err := json.Marshal(user)
-		if err != nil {
-			panic(err.Error())
-		}
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(200)
-		w.Write(response)
+		var user User                                     //create User
+		res.Scan(&user.Name, &user.Fullname, &user.Email) //Scan values to user
+		users = append(users, user)                       //Append User to array Users
 	}
+	response, err := json.Marshal(users)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	//write json response
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	w.Write(response)
 }
