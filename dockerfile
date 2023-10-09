@@ -7,13 +7,7 @@ WORKDIR /app
 # Copy code to /app
 COPY . /app
 
-# Install the go sql driver
-RUN go get github.com/go-sql-driver/mysql
-RUN go get github.com/gorilla/mux 
-
+# Build the app
 RUN go build -o app
-
-# Set go111module env variable
-#ENV GO111MODULE=auto
 
 CMD ["./app"]
